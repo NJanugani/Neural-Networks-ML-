@@ -1,0 +1,19 @@
+CFLAGS=-g -I.
+LFLAGS=
+CC = gcc
+
+poserecognizer: poserecognizer.o poserecognizerinit.o bpnn_initr.o pgm.o
+	$(CC) ${LFLAGS} poserecognizer.o poserecognizerinit.o bpnn_initr.o pgm.o \
+	      -o poserecognizer -lm
+
+poserecognizer_init0: poserecognizer.o poserecognizerinit.o bpnn_init0.o pgm.o
+	$(CC) ${LFLAGS} poserecognizer.o poserecognizerinit.o bpnn_init0.o pgm.o \
+	      -o poserecognizer -lm
+
+bpnn_initr.o: bpnn.c bpnn.h
+	$(CC) ${CFLAGS} -c bpnn.c
+	mv bpnn.o bpnn_initr.o
+
+bpnn_init0.o: bpnn.c bpnn.h
+	$(CC) ${CFLAGS} -c -DINITZERO bpnn.c
+	mv bpnn.o bpnn.o
